@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.iiitb.ac.in"
+xmlns="http://www.iiitb.ac.in"
+elementFormDefault="qualified">
+<xsd:element name="test">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="temp" type="data"/>
+            <xsd:element name="file" type="string"/>
+            <xsd:element name="query" type="Queries"/>
+            <xsd:element name="velocity" type="integer"/>
+            <xsd:element name="window-type" type="string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+<xsd:simpleType name="data">
+    <xsd:restriction base="xsd:decimal">
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="string">
+    <xsd:restriction base="xsd:string">
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="Queries">
+    <xsd:choice minOccurs="1">
+        <xsd:element name="average"/>
+        <xsd:element name="count"/>
+        <xsd:element name="minimum"/>
+        <xsd:element name="maximum"/>
+        <xsd:element name="sum"/>
+    </xsd:choice>
+</xsd:complexType>
+
+
+
+<xsd:simpleType name="integer">
+    <xsd:restriction base="xsd:integer">
+    </xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>
+        <!-- <xsd:simpleType name="data">
+            <xsd:restriction base="xsd:decimal">
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:complexType>
+</xsd:element>
+</xsd:schema> -->
+<!-- <xsd:simpleType name="data">
+    <xsd:restriction base="xsd:decimal">
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="file">
+    <xsd:restriction base="xsd:string">
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="Queries">
+    <xsd:choice minOccurs="1">
+        <xsd:element name="average">
+        <xsd:element name="count">
+        <xsd:element name="minimum">
+        <xsd:element name="maximum">
+        <xsd:element name="sum">
+    </xsd:choice>
+</xsd:complexType>
+
+<xsd:simpleType name="velocity">
+    <xsd:restriction base="xsd:integer">
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="window-type">
+  <xsd:simpleType>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="folding"/>
+      <xsd:enumeration value="sliding"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:element> -->
+
