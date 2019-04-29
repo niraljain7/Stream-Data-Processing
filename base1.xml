@@ -12,4 +12,5 @@
     <velocity>1</velocity>
     <window-type>sliding</window-type>
     <buffer-size>5</buffer-size>
+    <output>output1.txt</output>
 </stream-processing>
