@@ -12,5 +12,4 @@
     <velocity>5</velocity>
     <window-type>folding</window-type>
     <buffer-size>5</buffer-size>
-    <output>output.txt</output>
 </stream-processing>

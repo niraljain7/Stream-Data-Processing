@@ -5,46 +5,37 @@ import pandas
 import time
 import os
 import statistics
-import threading
-import numpy as np
-import lxml
-import xml.etree.ElementTree as ET 
 
 
-top = tk.Tk(
+top = tk.Tk()
 top.dat=[]
 top.filename = None
-top.n=0
-
 
 def click():
     top.filename=askopenfilename(initialdir = "/",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.csv")))
+    print (top.filename)
     df = open(top.filename,"r")
     data=df.readlines()
     top.dat=data[0].split(",")
     
+n=0
 
 def processing():
     while(1):
-        temp=top.dat[top.n:top.n+10]
-#        print(temp)
-#        print("\nLowest"+min(temp))
-#        print("\nHighest"+max(temp))
-        tem = np.array(temp).astype(np.int64)
-        entry1Text.set(str(tem))
-        entry2Text.set(str(tem.mean()))
-        entry3Text.set(str(tem.max()))
-        entry4Text.set(str(tem.min()))
-        top.n=top.n+1
+        temp=top.dat[n:n+10]
+        entry1Text.set(str(temp))
+        entry2Text.set(str(statistics.mean(temp)))
+        entry3Text.set(str(max(temp))
+        entry4Text.set(str(min(temp)))
         time.sleep(1)
+        n=n+10
 
-t1 = threading.Thread(target=processing)
 
-def changeText():     
-    t1.start()
-   # threading.Timer(1,processing).start()
+def changeText():
+    entry1Text.set( "Hello World" )
+    processing()
 
-button1 = tk.Button(top, text ="Start",command=changeText)
+button1 = tk.Button(top, text ="Start",command=processing)
 button1.place(x = 20, y = 60, width=120, height=25)
 
 button2 = tk.Button(top, text ="Pick File",command=click)

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <stream-processing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.iiitb.ac.in" xsi:schemaLocation="http://www.iiitb.ac.in base.xsd">
     
-    <unit>Celsius</unit>
+    <unit>Rupees</unit>
     <file>random.csv</file>
     <queries>
         <query>average</query>
         <query>minimum</query>
         <query>maximum</query>
     </queries>
-    <window-size>10</window-size>
-    <velocity>5</velocity>
-    <window-type>folding</window-type>
+    <window-size>20</window-size>
+    <velocity>1</velocity>
+    <window-type>sliding</window-type>
     <buffer-size>5</buffer-size>
-    <output>output.txt</output>
 </stream-processing>

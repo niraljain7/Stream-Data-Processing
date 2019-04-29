@@ -11,20 +11,13 @@ import lxml
 import xml.etree.ElementTree as ET 
 import xmltodict
 
-
-
-
 top = tk.Tk()
 top.dat=[]
 top.filename = None
 top.n=0
 
-
-
-
-
 def click():
-        top.filename=askopenfilename(initialdir = "/",title = "Select file",filetypes = (("xml files","*.xml"),("all files","*.xml")))
+        top.filename=askopenfilename(initialdir = "/Study/Project/Stream Data",title = "Select file",filetypes = (("xml files","*.xml"),("all files","*.xml")))
         df = open(top.filename,"r")
 
         top.file_xml=bytearray(df.read(),'utf8')
@@ -37,14 +30,14 @@ def click():
         top.source_file=top.file_dict['stream-processing']['file']
         top.unit=top.file_dict['stream-processing']['unit']
         top.buffer_size=int(top.file_dict['stream-processing']['buffer-size'])
+        top.output_file=top.file_dict['stream-processing']['output']
         top.list_min=[None]*top.buffer_size
         top.list_max=[None]*top.buffer_size
         top.list_avg=[None]*top.buffer_size
+
 #    print(file_dict.keys())
 #    print(type(file_dict))
 #    print(file_dict['stream-processing']['queries']['query'])
-
-
 
 def processing():
     while(1):
@@ -53,6 +46,7 @@ def processing():
 #        print(temp)
 #        print("\nLowest"+min(temp))
 #        print("\nHighest"+max(temp))
+        top.ofile = open("/Study/Project/Stream Data/outputs/"+top.output_file,"a+")
 
         tem = np.array(temp).astype(np.int64)
         tem_min=tem.min()
@@ -65,11 +59,16 @@ def processing():
         top.n=top.n+int(top.shift)
         time.sleep(1)
         top.list_min.insert(0,tem_min)
+        
         top.list_min.pop()
         top.list_max.insert(0,tem_max)
         top.list_max.pop()
         top.list_avg.insert(0,tem_avg)
         top.list_avg.pop()
+
+        top.ofile.write("\n"+str(tem_min)+","+str(tem_max)+","+str(tem_avg))
+        top.ofile.close()
+
         entry5Text.set(str(top.list_min))
         entry6Text.set(str(top.list_max))
         entry7Text.set(str(top.list_avg))
@@ -79,6 +78,7 @@ t1 = threading.Thread(target=processing)
 def changeText():
 
         sfile = open(top.source_file,"r")
+        
         data=sfile.readlines()
         top.dat=data[0].split(",")
 
@@ -125,7 +125,6 @@ button1.place(x = 20, y = 60, width=120, height=25)
 button2 = tk.Button(top, text ="Pick File",command=click)
 button2.place(x = 20, y = 30, width=120, height=25)
 
-
 entry1Text=tk.StringVar()
 entry2Text=tk.StringVar()
 entry3Text=tk.StringVar()
@@ -133,9 +132,6 @@ entry4Text=tk.StringVar()
 entry5Text=tk.StringVar()
 entry6Text=tk.StringVar()
 entry7Text=tk.StringVar()
-
-
-
 
 top.geometry("800x400")
 
