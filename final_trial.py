@@ -22,7 +22,7 @@ def childStart():
         pass
 
 def childInitialising():
-        os.system("python app-xml.py")
+        os.system("python app-api-call.py")
 
 def startProcessing():
         t1 = threading.Thread(target=childInitialising)

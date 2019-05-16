@@ -1,9 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 import csv
 import pandas
-from pandas import DataFrame
 import time
 import os
 import statistics
@@ -12,19 +10,12 @@ import numpy as np
 import lxml
 import xml.etree.ElementTree as ET 
 import xmltodict
-import matplotlib
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
-
-
+import requests
 
 top = tk.Tk()
 top.dat=[]
 top.filename = None
 top.n=0
-top.yaxis_count=0
-
 
 def click():
         top.filename=askopenfilename(initialdir = "/Study/Project/Stream Data",title = "Select file",filetypes = (("xml files","*.xml"),("all files","*.xml")))
@@ -44,7 +35,6 @@ def click():
         top.list_min=[None]*top.buffer_size
         top.list_max=[None]*top.buffer_size
         top.list_avg=[None]*top.buffer_size
-        top.yaxis=[None]*top.buffer_size
 
 #    print(file_dict.keys())
 #    print(type(file_dict))
@@ -53,7 +43,10 @@ def click():
 def processing():
     while(1):
 
-        temp=top.dat[top.n:top.n+int(top.window_size)]
+        r = requests.get(url = "http://13.232.145.55:5555/random/"+top.window_size).text
+        
+
+        temp=list(r[1:-1].split(","))                                       #top.dat[top.n:top.n+int(top.window_size)]
 #        print(temp)
 #        print("\nLowest"+min(temp))
 #        print("\nHighest"+max(temp))
@@ -79,24 +72,6 @@ def processing():
 
         top.ofile.write("\n"+str(tem_min)+","+str(tem_max)+","+str(tem_avg))
         top.ofile.close()
-
-        top.yaxis_count+=1
-        top.yaxis.insert(0,top.yaxis_count)
-        top.yaxis.pop()
-
-
-        Pdata = {"Average":top.list_avg,"Time":top.yaxis}
-        Pdataframe = DataFrame (Pdata, columns = ["Average","Time"])
-
-        figure = plt.Figure(figsize=(6,5), dpi=100)
-        ax = figure.add_subplot(111)
-        chart_type = FigureCanvasTkAgg(figure, top)
-        chart_type.get_tk_widget().pack()
-        Pdataframe.plot(kind='line', legend=True, ax=ax)
-        ax.set_title('Stats')
-        
-
-
 
         entry5Text.set(str(top.list_min))
         entry6Text.set(str(top.list_max))
@@ -140,9 +115,6 @@ def changeText():
 #                label4.place(x = 105, y = 250, width=50, height=25)
                 entry7 = tk.Entry(top, state='disabled', textvariable=entry7Text)
                 entry7.place(x = 220, y = 250, width=180, height=25)
-
-
-
 
         entry1 = tk.Entry(top, state='disabled', textvariable=entry1Text )
         entry1.place(x = 40, y = 150, width=700, height=25)
